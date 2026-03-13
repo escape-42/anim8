@@ -2,6 +2,10 @@
 
 > Crude GIFs, maximum vibes.
 
+Created by [@escape42](https://x.com/escape42) with the help of Claude Code
+
+Try it [here](https://anim8.entropicsystems.net/)
+
 ---
 
 ## Features
