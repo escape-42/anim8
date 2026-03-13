@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}anim8 — Make a GIF{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <center><img src="{{ url_for('static', filename='anim8_dd.gif') }}" width="300px"></img></center>
+    <h1>Drop your frames, get a GIF</h1>
+    <p class="subtitle">Upload 2–8 images. Drag to reorder. We stitch them into a loop.</p>
+</section>
+
+<form id="upload-form" enctype="multipart/form-data">
+    <div id="drop-zone" class="drop-zone">
+        <div class="drop-zone__prompt">
+            <span class="drop-zone__icon">&#128247;</span>
+            <p>Drag &amp; drop images here</p>
+            <p class="drop-zone__hint">or click to browse &bull; PNG, JPG, WebP, BMP, GIF</p>
+        </div>
+        <input type="file" id="file-input" name="images" multiple
+               accept=".png,.jpg,.jpeg,.webp,.bmp,.gif" hidden>
+    </div>
+
+    <div id="preview-area" class="preview-area" hidden>
+        <h2>Your Frames <span id="frame-count" class="badge">0</span></h2>
+        <p class="reorder-hint">Drag to reorder</p>
+        <div id="preview-grid" class="preview-grid"></div>
+    </div>
+
+    <div class="controls">
+        <label class="speed-control">
+            <span>Speed</span>
+            <input type="range" id="duration-slider" min="50" max="2000" value="500" step="50">
+            <span id="duration-label" class="duration-label">500ms</span>
+        </label>
+        <input type="hidden" id="duration-input" name="duration" value="500">
+        <button type="submit" id="submit-btn" class="btn btn--primary" disabled>
+            Create GIF
+        </button>
+    </div>
+
+    <div id="error-msg" class="error-msg" hidden></div>
+    <div id="progress" class="progress" hidden>
+        <div class="spinner"></div>
+        <span>Stitching your GIF&hellip;</span>
+    </div>
+</form>
+
+<section id="result" class="result" hidden>
+    <h1>Your GIF is ready</h1>
+    <div class="gif-display">
+        <img id="gif-preview" src="" alt="Your animated GIF">
+    </div>
+    <div class="actions">
+        <a id="download-btn" class="btn btn--primary" href="#" download="anim8.gif">
+            Download GIF
+        </a>
+        <button id="make-another-btn" class="btn btn--secondary">
+            Make Another
+        </button>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}

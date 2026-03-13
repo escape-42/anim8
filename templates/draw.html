@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}anim8 — Draw Frames{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/draw.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="draw-layout">
+
+    <!-- Left toolbar -->
+    <aside class="toolbar">
+        <div class="toolbar__section">
+            <button id="tool-marker" class="tool-btn tool-btn--active" title="Marker" data-tool="marker">&#9999;</button>
+            <button id="tool-eraser" class="tool-btn" title="Eraser" data-tool="eraser">&#9003;</button>
+        </div>
+
+        <div class="toolbar__section toolbar__section--divider">
+            <label class="toolbar__label">Size</label>
+            <button class="size-btn" data-size="4" title="Small">&#9679;</button>
+            <button class="size-btn size-btn--active" data-size="10" title="Medium">&#9679;</button>
+            <button class="size-btn" data-size="22" title="Large">&#9679;</button>
+        </div>
+
+        <div class="toolbar__section toolbar__section--divider">
+            <label class="toolbar__label">Color</label>
+            <div id="palette" class="palette"></div>
+            <input type="color" id="custom-color" class="custom-color" title="Custom color" value="#7c5cff">
+        </div>
+
+        <div class="toolbar__section toolbar__section--divider">
+            <label class="toolbar__label onion-label">
+                <input type="checkbox" id="onion-toggle"> Onion
+            </label>
+            <button id="clear-btn" class="tool-action-btn" title="Clear frame">Clear</button>
+        </div>
+    </aside>
+
+    <!-- Canvas -->
+    <div class="canvas-wrap">
+        <canvas id="draw-canvas"></canvas>
+    </div>
+
+    <!-- Bottom panel -->
+    <div class="bottom-panel">
+        <div class="frame-strip" id="frame-strip"></div>
+
+        <div class="export-bar">
+            <label class="speed-control">
+                <span>Speed</span>
+                <input type="range" id="duration-slider" min="50" max="2000" value="500" step="50">
+                <span id="duration-label" class="duration-label">500ms</span>
+            </label>
+            <button id="export-btn" class="btn btn--primary">Create GIF</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Inline result -->
+<section id="result" class="result" hidden>
+    <h1>Your GIF is ready</h1>
+    <div class="gif-display">
+        <img id="gif-preview" src="" alt="Your animated GIF">
+    </div>
+    <div class="actions">
+        <a id="download-btn" class="btn btn--primary" href="#" download="anim8_draw.gif">Download GIF</a>
+        <button id="draw-another-btn" class="btn btn--secondary">Draw Another</button>
+    </div>
+</section>
+
+<div id="error-msg" class="error-msg" hidden></div>
+<div id="progress" class="progress" hidden>
+    <div class="spinner"></div>
+    <span>Stitching your GIF&hellip;</span>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/draw.js') }}"></script>
+{% endblock %}

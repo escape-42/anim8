@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}anim8{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block extra_css %}{% endblock %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="logo">
+            <span class="logo-icon">&#9881;</span> anim8
+        </a>
+        <nav class="nav-links">
+            <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}nav-link--active{% endif %}">
+                &#128247; Upload
+            </a>
+            <a href="{{ url_for('draw') }}" class="nav-link {% if request.endpoint == 'draw' %}nav-link--active{% endif %}">
+                &#9998; Draw
+            </a>
+        </nav>
+        <div class="navbar-right">
+            <button id="help-btn" class="help-btn" aria-label="Help">?</button>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                <span class="theme-toggle__knob">&#9790;</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Global help modal -->
+    <div id="help-overlay" class="modal-overlay" hidden>
+        <div class="modal modal--help" role="dialog" aria-labelledby="help-title">
+            <button id="help-close" class="modal__close" aria-label="Close">&times;</button>
+            <h2 id="help-title" class="modal__title">&#128218; Help</h2>
+            <div class="modal__body">
+
+                <div class="help-section">
+                    <h3 class="help-section__heading">&#128247; Upload Mode</h3>
+                    <ul class="help-list">
+                        <li>Drag &amp; drop or click to select <strong>2–8 images</strong></li>
+                        <li>Supported formats: <strong>PNG, JPG, WebP, BMP, GIF</strong> (first frame of GIFs is used)</li>
+                        <li>Drag thumbnails to <strong>reorder frames</strong> before creating</li>
+                        <li>Use the <strong>Speed slider</strong> to control frame delay (50ms–2s)</li>
+                        <li>Your GIF is returned as a direct download — nothing is stored</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h3 class="help-section__heading">&#9998; Draw Mode</h3>
+                    <ul class="help-list">
+                        <li>Draw up to <strong>50 frames</strong> on the canvas using marker or eraser</li>
+                        <li>Pick a color from the palette or use the <strong>custom color picker</strong></li>
+                        <li>Three brush sizes: small, medium, large</li>
+                        <li>Enable <strong>Onion Skin</strong> to ghost the previous frame as a drawing guide</li>
+                        <li>Click <strong>+</strong> in the frame strip to add a frame, hover a frame to delete it</li>
+                        <li>Click any frame thumbnail to jump to it</li>
+                        <li>Hit <strong>Clear</strong> to wipe the current frame and start over</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h3 class="help-section__heading">&#128274; Privacy</h3>
+                    <ul class="help-list">
+                        <li>Uploaded images are <strong>never written to disk</strong> — processed entirely in memory</li>
+                        <li>Drawn frames exist only in your browser until you export</li>
+                        <li>The server streams your GIF back as raw bytes and immediately discards it</li>
+                        <li>Close the tab and everything is gone. Zero traces.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        {% block content %}
+        <div class="not-found">
+            <h1>404</h1>
+            <p>Nothing here. <a href="{{ url_for('index') }}">Go make a GIF.</a></p>
+        </div>
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>anim8 &mdash; crude GIFs, maximum vibes | Created by <a href="https://x.com/escape42" target="_blank">@escape42</a> with the help of Claude Code</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
