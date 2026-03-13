@@ -1,2 +1,3 @@
 # anim8
-Drop (or draw) your frames, get a GIF
+## Try [anim8](https://anim8.entropicsystems.net/)
+
